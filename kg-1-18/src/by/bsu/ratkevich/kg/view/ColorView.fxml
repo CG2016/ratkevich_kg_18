@@ -42,5 +42,6 @@
             <Font size="35.0" />
          </font>
       </Label>
+      <Label fx:id="warningLabel" layoutX="14.0" layoutY="342.0" prefHeight="26.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

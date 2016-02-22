@@ -65,6 +65,9 @@ public class ColorViewController {
 	private Label labelLab;
 
 	@FXML
+	private Label warningLabel;
+
+	@FXML
 	void initialize() {
 		final ChangeListener<Number> labChangeListener = new ChangeListener<Number>() {
 
@@ -140,6 +143,11 @@ public class ColorViewController {
 					colorRgbG.setValue(gVal);
 					colorRgbB.setValue(bVal);
 
+					if (rVal > 255 || gVal > 255 || bVal > 255) {
+						warningLabel.setText(String.format("Was trimmed to RGB. (%.0f; %.0f; %.0f)", rVal, gVal, bVal));
+					} else {
+						warningLabel.setText("");
+					}
 				} finally {
 					inChange = false;
 				}
