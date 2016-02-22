@@ -1,1 +1,1 @@
-# ratkevich_kg_lab1
+# ratkevich_kg
