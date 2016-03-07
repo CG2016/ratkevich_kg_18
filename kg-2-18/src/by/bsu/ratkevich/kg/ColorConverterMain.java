@@ -16,7 +16,7 @@ public class ColorConverterMain extends Application {
 	private AnchorPane rootLayout;
 
     @Override
-    public void start(Stage primaryStage) {
+	public void start(final Stage primaryStage) {
         this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Color converter");
 
@@ -29,15 +29,15 @@ public class ColorConverterMain extends Application {
     public void initRootLayout() {
         try {
             // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
+			final FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ColorConverterMain.class.getResource("view/ColorView.fxml"));
             rootLayout = (AnchorPane) loader.load();
 
             // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
+			final Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
         }
     }
@@ -46,7 +46,7 @@ public class ColorConverterMain extends Application {
         return primaryStage;
     }
 
-    public static void main(String[] args) {
+	public static void main(final String[] args) {
         launch(args);
     }
 

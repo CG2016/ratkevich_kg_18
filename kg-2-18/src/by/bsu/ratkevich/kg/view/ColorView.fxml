@@ -17,7 +17,7 @@
       <Button fx:id="uploadButton" layoutX="348.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#uploadOnClick" text="Загрузить картинку..." />
       <Button fx:id="saveButton" layoutX="498.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#saveOnClick" text="Сохранить картинку..." />
       <CheckBox fx:id="isRgb" layoutX="168.0" layoutY="77.0" mnemonicParsing="false" text="Использовать сплошной цвет" />
-      <Slider fx:id="radiusSlider" layoutX="642.0" layoutY="74.0" minorTickCount="5" prefHeight="14.0" prefWidth="363.0" showTickLabels="true" showTickMarks="true" />
+      <Slider fx:id="radiusSlider" layoutX="642.0" layoutY="74.0" minorTickCount="5" prefHeight="14.0" prefWidth="363.0" showTickLabels="true" showTickMarks="true" value="25.0" />
       <Label layoutX="658.0" layoutY="27.0" text="Погрешность">
          <font>
             <Font size="30.0" />
@@ -34,7 +34,7 @@
          </font>
       </Label>
       <ColorPicker fx:id="toColor" layoutX="310.0" layoutY="37.0" />
-      <CheckBox fx:id="isAuto" layoutX="451.0" layoutY="24.0" mnemonicParsing="false" selected="true" text="Пересчитывать автоматически" />
-      <Button fx:id="calculateBtn" layoutX="512.0" layoutY="55.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Пересчитать" visible="false" />
+      <CheckBox fx:id="isAuto" layoutX="451.0" layoutY="24.0" mnemonicParsing="false" text="Пересчитывать автоматически" />
+      <Button fx:id="calculateBtn" layoutX="512.0" layoutY="55.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Пересчитать" />
    </children>
 </AnchorPane>
