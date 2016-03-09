@@ -2,6 +2,7 @@ package by.bsu.ratkevich.kg;
 
 import java.io.IOException;
 
+import by.bsu.ratkevich.kg.view.ColorViewController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -31,11 +32,15 @@ public class ColorConverterMain extends Application {
             // Load root layout from fxml file.
 			final FXMLLoader loader = new FXMLLoader();
             loader.setLocation(ColorConverterMain.class.getResource("view/ColorView.fxml"));
-            rootLayout = (AnchorPane) loader.load();
+			rootLayout = loader.<AnchorPane> load();
 
             // Show the scene containing the root layout.
 			final Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+
+			// Give the controller access to the main app.
+			ColorViewController controller = loader.getController();
+			controller.setScene(scene);
             primaryStage.show();
 		} catch (final IOException e) {
 			e.printStackTrace();

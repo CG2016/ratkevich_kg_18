@@ -1,7 +1,11 @@
 package by.bsu.ratkevich.kg.view;
 
+import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
@@ -17,18 +21,24 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class ColorViewController {
+
+	private static final String EYE_DROPPER_LABEL = "Пипетка (клавиша ALT): ";
 
 	@FXML
 	private ImageView imageSrc;
@@ -59,6 +69,13 @@ public class ColorViewController {
 
 	@FXML
 	private Button calculateBtn;
+
+	@FXML
+	private Label eyeDropperStatus;
+
+	private Scene scene;
+
+	private boolean eyeDropperCursor;
 
 	@FXML
 	void initialize() throws FileNotFoundException {
@@ -104,6 +121,7 @@ public class ColorViewController {
 		final ImageFilter colorfilter = new RGBSwapFilter(fromColor.getValue(), toColor.getValue(), radiusSlider.getValue(),
 				isRgb.isSelected());
 		final java.awt.Image imageFiltered = new Component() {
+
 			private static final long serialVersionUID = 1L;
 		}.createImage(new FilteredImageSource(SwingFXUtils.fromFXImage(imageSrc.getImage(), null).getSource(), colorfilter));
 
@@ -133,7 +151,7 @@ public class ColorViewController {
 	}
 
 	@FXML
-	public void saveOnClick() {
+	public void saveOnClick() throws AWTException {
 		final FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save Image");
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("PNG Image", "*.png"));
@@ -149,6 +167,37 @@ public class ColorViewController {
 				System.out.println(ex.getMessage());
 			}
 		}
+	}
+
+	@FXML
+	public void windowKeyPressedListener(KeyEvent keyEvent) throws AWTException {
+		if (keyEvent.getCode().compareTo(KeyCode.ALT) == 0) {
+			if (eyeDropperCursor) {
+				eyeDropperCursor = false;
+				scene.setOnMouseMoved(null);
+				eyeDropperStatus.setText(EYE_DROPPER_LABEL + "ВЫКЛ");
+			} else {
+				try {
+					try {
+						final Robot robot = new Robot();
+						scene.setOnMouseMoved(mouseEvent -> {
+							final Point pointer = MouseInfo.getPointerInfo().getLocation();
+							final java.awt.Color pixelColor = robot.getPixelColor((int) pointer.getX(), (int) pointer.getY());
+							fromColor.setValue(Color.rgb(pixelColor.getRed(), pixelColor.getGreen(), pixelColor.getBlue()));
+						});
+						eyeDropperStatus.setText(EYE_DROPPER_LABEL + "ВКЛ");
+					} catch (AWTException ex) {
+						ex.printStackTrace();
+					}
+				} finally {
+					eyeDropperCursor = true;
+				}
+			}
+		}
+	}
+
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 
 }
